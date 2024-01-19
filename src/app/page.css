@@ -1,0 +1,34 @@
+.home {
+  display: flex;
+  align-items: stretch;
+}
+.home__leftSectionWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  background-color: red;
+}
+.home__leftSection {
+  width: 72px;
+  height: 100dvh;
+}
+.home__leftSectionFixed {
+  position: fixed;
+  width: inherit;
+  padding: 0 8px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.home__rightSectionWrapper {
+  display: flex;
+  align-items: flex-start;
+  height: 100dvh;
+  flex-direction: column;
+  flex-grow: 2;
+  background-color: blue;
+}
+
+/*# sourceMappingURL=page.css.map */
