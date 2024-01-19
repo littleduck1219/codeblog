@@ -7,4 +7,32 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+
+  &__title {
+    display: flex;
+    height:40px;
+  }
+
+  &__profile {
+    position: fixed;
+    right: 1.5rem;
+    top: 6rem;
+    display: flex;
+    flex-direction: column; // 열 방향으로 변경
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px; // 모달의 모서리를 둥글게
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -10px; // 꼬리표 위치 조정
+      right: 20px; // 꼬리표 위치 조정
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid white; // 꼬리표 색상
+    }
+  }
 }
