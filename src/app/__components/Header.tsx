@@ -3,14 +3,43 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./header.scss";
 import Image from "next/image";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
 
 export default function Header() {
   const [profileModal, setProfileModal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const { data: userInfo } = useSession();
 
   const profileOnClick = () => {
     setProfileModal(!profileModal);
-    console.log(profileModal);
+  };
+
+  const onClickLogin = async () => {
+    setProfileModal(false);
+    // const provider = new GoogleAuthProvider();
+    await signIn("google", { callbackUrl: "/" });
+    // await signInWithPopup(auth, new GoogleAuthProvider())
+    //   .then((result) => {
+    //     console.log(result);
+    //     toast.success("로그인 되었습니다.");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     if (error.code === "auth/account-exists-with-different-credential") {
+    //       toast.error("이미 가입된 계정입니다.");
+    //     } else {
+    //       toast.error("로그인에 실패했습니다.");
+    //     }
+    //   });
+  };
+
+  const onClickLogout = async () => {
+    setProfileModal(false);
+    await signOut({ callbackUrl: "/" });
+    toast.success("로그아웃 되었습니다.");
   };
 
   useEffect(() => {
@@ -24,7 +53,22 @@ export default function Header() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [modalRef]);
+  }, [modalRef, profileModal]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // 사용자가 로그인했습니다.
+        console.log("Logged in user:", user);
+      } else {
+        // 사용자가 로그아웃했습니다.
+        console.log("No user is logged in.");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+  console.log(auth);
 
   return (
     <div className="Header">
@@ -41,8 +85,15 @@ export default function Header() {
       </div>
       {profileModal && (
         <div ref={modalRef} className="Header__profile">
-          <div className="Header__profile--item">내 정보</div>
-          <div className="Header__profile--item">로그아웃</div>
+          {userInfo ? (
+            <div className="Header__profile--item" onClick={onClickLogout}>
+              로그아웃
+            </div>
+          ) : (
+            <div className="Header__profile--item" onClick={onClickLogin}>
+              로그인
+            </div>
+          )}
         </div>
       )}
     </div>

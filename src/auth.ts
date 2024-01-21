@@ -7,10 +7,7 @@ export const {
   handlers: { GET, POST },
   signIn,
 } = NextAuth({
-  pages: {
-    // signIn: '/i/flow/login',
-    // newUser: '/i/flow/signup',
-  },
+  pages: { signIn: "/" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -24,23 +21,23 @@ export const {
     }),
   ],
   callbacks: {
-    async signIn({ account, profile }) {
-      if (
-        account?.provider === "google" &&
-        typeof account.idToken === "string"
-      ) {
-        const credential = GoogleAuthProvider.credential(account.idToken);
-        try {
-          // Firebase 인증
-          await signInWithCredential(auth, credential);
-          return true;
-        } catch (error) {
-          console.error("Firebase authentication error:", error);
+    async signIn({ user, account, profile, email, credentials }) {
+      try {
+        const googleCredential = GoogleAuthProvider.credential(
+          account?.id_token,
+        );
+        const userCredential = await signInWithCredential(
+          auth,
+          googleCredential,
+        ).catch((e) => {
+          console.log(e);
           return false;
-        }
+        });
+        return !!userCredential;
+      } catch (e) {
+        console.log(e);
+        return false;
       }
-      return true;
     },
-    // ... 다른 콜백들
   },
 });
