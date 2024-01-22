@@ -1,0 +1,45 @@
+.main {
+margin: 0 auto;
+  max-width: 800px;
+
+}
+
+.postForm {
+  &__titleInputSection {
+    max-width: 800px;
+    margin: 18px auto 17px
+  }
+  &__titleInput {
+    width: 100%;
+    color: black;
+    background-color: white;
+    font-size: 2rem;
+    padding-bottom: 1.5rem;
+    border: none;
+    border-bottom: 1px solid #ccc;
+
+    outline: none;
+  }
+  &__textArea {
+    height: 900px;
+  }
+}
+
+/* Tell Quill not to scroll */
+#quill-container {
+  height: auto;
+  min-height: 100%;
+  padding: 50px;
+}
+#quill-container .ql-editor {
+  font-size: 18px;
+  overflow-y: visible;
+}
+
+/* Specify our own scrolling container */
+#scrolling-container {
+  height: 1000px;
+  min-height: 900px;
+  overflow-y: auto;
+
+}

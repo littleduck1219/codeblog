@@ -7,6 +7,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
+import Link from "next/link";
 
 export default function Header() {
   const [profileModal, setProfileModal] = useState(false);
@@ -68,13 +69,12 @@ export default function Header() {
 
     return () => unsubscribe();
   }, []);
-  console.log(auth);
 
   return (
     <div className="Header">
-      <div className="Header__title">
+      <Link href={`/`} className="Header__title">
         <img src="/img/littleduck-name-hight.png" alt="title" />
-      </div>
+      </Link>
       <div onClick={profileOnClick}>
         <Image
           width={80}
