@@ -20,24 +20,19 @@
 .postForm__textArea {
   height: 900px;
 }
-
-/* Tell Quill not to scroll */
-#quill-container {
-  height: auto;
-  min-height: 100%;
-  padding: 50px;
+.postForm__editorWrapper {
+  position: relative;
 }
-
-#quill-container .ql-editor {
-  font-size: 18px;
-  overflow-y: visible;
+.postForm__containerEditable {
+  min-height: 500px;
+  width: 100%;
+  padding: 0.5rem;
+  outline: none;
 }
-
-/* Specify our own scrolling container */
-#scrolling-container {
-  height: 1000px;
-  min-height: 900px;
-  overflow-y: auto;
+.postForm__placeholder {
+  position: absolute;
+  top: 8px;
+  left: 8px;
 }
 
 /*# sourceMappingURL=newPost.css.map */
