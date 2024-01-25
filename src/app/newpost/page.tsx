@@ -1,7 +1,8 @@
 "use client";
 
 import React, { ChangeEventHandler, useState } from "react";
-import LexicalEditor from "@/app/newpost/LexicalEditor";
+import { Editor } from "@/app/newpost/__components";
+import "./newPost.scss";
 
 function Page({ props }: any) {
   const [title, setTitle] = useState("");
@@ -29,7 +30,7 @@ function Page({ props }: any) {
         />
       </div>
       <div className="postForm__editorWrapper">
-        <LexicalEditor />
+        <Editor />
       </div>
       <button>작성하기</button>
     </form>

@@ -1,11 +1,9 @@
-.main {
-  margin: 0 auto;
-  //max-width: 1100px;
-}
-
 .postForm {
+  margin: 0 auto;
+
   input::placeholder {
     color: #FFE5E5;
+    margin: 0 auto;
   }
 
   &__titleInputSection {
@@ -26,12 +24,10 @@
     outline: none;
   }
 
-  &__textArea {
-    height: 900px;
-  }
-
   &__editorWrapper {
+    margin: 0 auto;
     position: relative;
+    max-width: 1100px;
   }
 
 }

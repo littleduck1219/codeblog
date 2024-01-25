@@ -1,9 +1,9 @@
-.main {
+.postForm {
   margin: 0 auto;
 }
-
 .postForm input::placeholder {
   color: #FFE5E5;
+  margin: 0 auto;
 }
 .postForm__titleInputSection {
   max-width: 1100px;
@@ -21,11 +21,10 @@
   border-bottom: 1px solid #ccc;
   outline: none;
 }
-.postForm__textArea {
-  height: 900px;
-}
 .postForm__editorWrapper {
+  margin: 0 auto;
   position: relative;
+  max-width: 1100px;
 }
 
 /*# sourceMappingURL=newPost.css.map */
