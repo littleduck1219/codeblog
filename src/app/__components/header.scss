@@ -1,7 +1,5 @@
 .Header {
   max-height: 100px;
-  background-color: purple;
-  border: 1px solid black;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,24 +13,51 @@
 
   &__profile {
     position: fixed;
-    right: 1.5rem;
-    top: 6rem;
+    right: 1.1rem;
+    top: 5rem;
     display: flex;
     flex-direction: column; // 열 방향으로 변경
     background-color: white;
     padding: 1rem;
     border-radius: 8px; // 모달의 모서리를 둥글게
 
+
     &::before {
       content: "";
       position: absolute;
       top: -10px; // 꼬리표 위치 조정
-      right: 20px; // 꼬리표 위치 조정
+      right: 10px; // 꼬리표 위치 조정
       width: 0;
       height: 0;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       border-bottom: 10px solid white; // 꼬리표 색상
     }
+  }
+
+  &__loginMenu {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__loginButton {
+    display: flex;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  &__userId {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  &__profile--item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

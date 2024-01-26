@@ -28,7 +28,17 @@
   height: 100dvh;
   flex-direction: column;
   flex-grow: 3;
-  background-color: blue;
+}
+.home__postButton {
+  background-color: #4287f5;
+  color: white;
+  border-radius: 2rem;
+  width: 12rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 }
 
 /*# sourceMappingURL=page.css.map */

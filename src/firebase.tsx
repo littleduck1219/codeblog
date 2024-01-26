@@ -1,10 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { FirebaseApp, getApp, initializeApp } from "firebase/app";
+import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "@firebase/auth";
-
-export let app: FirebaseApp;
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_REACT_APP_API_KEY,
@@ -16,14 +14,7 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_REACT_APP_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-try {
-  app = getApp("app");
-} catch (error) {
-  app = initializeApp(firebaseConfig, "app");
-}
-
-export const firebase = initializeApp(firebaseConfig);
+export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-export const auth = getAuth(firebase);
+export const auth = getAuth(app);

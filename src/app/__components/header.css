@@ -1,7 +1,5 @@
 .Header {
   max-height: 100px;
-  background-color: purple;
-  border: 1px solid black;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -14,8 +12,8 @@
 }
 .Header__profile {
   position: fixed;
-  right: 1.5rem;
-  top: 6rem;
+  right: 1.1rem;
+  top: 5rem;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -26,12 +24,35 @@
   content: "";
   position: absolute;
   top: -10px;
-  right: 20px;
+  right: 10px;
   width: 0;
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid white;
+}
+.Header__loginMenu {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.Header__loginButton {
+  display: flex;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.Header__userId {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.Header__profile--item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=header.css.map */
