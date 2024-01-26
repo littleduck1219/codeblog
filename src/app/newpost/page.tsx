@@ -1,12 +1,12 @@
 "use client";
 
 import React, { ChangeEventHandler, useEffect, useState } from "react";
-import { Editor } from "@/app/newpost/__components";
 import "./newPost.scss";
 import { auth } from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/app/store/user";
+import { PopupEditor } from "@/app/newpost/__components/Editor";
 
 function Page({ props }: any) {
   const [title, setTitle] = useState("");
@@ -51,7 +51,7 @@ function Page({ props }: any) {
         />
       </div>
       <div className="postForm__editorWrapper">
-        <Editor />
+        <PopupEditor />
       </div>
       <button>작성하기</button>
     </form>
