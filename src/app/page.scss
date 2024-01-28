@@ -34,6 +34,14 @@
     //background-color: blue;
   }
 
+  &___rightSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
   &__postButton {
     background-color: #4287f5;
     color: white;

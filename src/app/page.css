@@ -29,6 +29,13 @@
   flex-direction: column;
   flex-grow: 3;
 }
+.home___rightSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 .home__postButton {
   background-color: #4287f5;
   color: white;

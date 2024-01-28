@@ -1,6 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
-// => Tiptap packages
 import { useEditor, EditorContent, Editor, BubbleMenu } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -12,18 +11,42 @@ import Italic from "@tiptap/extension-italic";
 import Strike from "@tiptap/extension-strike";
 import Code from "@tiptap/extension-code";
 import History from "@tiptap/extension-history";
+import Image from "@tiptap/extension-image";
+import Dropcursor from "@tiptap/extension-dropcursor";
 // Custom
 import * as Icons from "./Icons";
+import content from "./Content";
 import { LinkModal } from "./LinkModal";
 import "./editor.scss";
 
-export function PopupEditor() {
+type TextBlock = {
+  type: string;
+  text?: string;
+};
+
+type Block = {
+  type: string;
+  content?: TextBlock[];
+};
+
+type EditorJson = {
+  type: string;
+  content?: Block[];
+};
+
+type PopupEditorProps = {
+  onChangeContent: (newContent: string) => void;
+};
+
+export function PopupEditor({ onChangeContent }: PopupEditorProps) {
   const editor = useEditor({
     extensions: [
       Document,
       History,
       Paragraph,
       Text,
+      Image,
+      Dropcursor,
       Link.configure({
         openOnClick: false,
       }),
@@ -33,9 +56,11 @@ export function PopupEditor() {
       Strike,
       Code,
     ],
+    content,
   }) as Editor;
   const [modalIsOpen, setIsOpen] = useState(false);
   const [url, setUrl] = useState<string>("");
+  const [isAddingImage, setIsAddingImage] = useState(false);
 
   const openModal = useCallback(() => {
     setUrl(editor.getAttributes("link").href);
@@ -87,6 +112,55 @@ export function PopupEditor() {
     editor.chain().focus().toggleCode().run();
   }, [editor]);
 
+  // extend Image
+  const addImage = useCallback(() => {
+    const url = window.prompt("URL");
+    if (url === null) {
+      return;
+    }
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("image").clearContent().run();
+      return;
+    }
+
+    setIsAddingImage(true);
+    editor.chain().focus().setImage({ src: url }).run();
+    setIsAddingImage(false);
+  }, [editor]);
+
+  useEffect(() => {
+    if (!editor) return;
+
+    const handleUpdate = () => {
+      if (isAddingImage) return;
+
+      const jsonContent = editor.getJSON();
+      const xmlContent = editor.getHTML();
+      const extractedText = extractTextFromJson(jsonContent as EditorJson);
+      onChangeContent(xmlContent);
+    };
+
+    editor.on("update", handleUpdate);
+    return () => {
+      editor.off("update", handleUpdate);
+    };
+  }, [editor, onChangeContent, isAddingImage]);
+
+  const extractTextFromJson = (json: EditorJson) => {
+    let extractedText = "";
+
+    json?.content?.forEach((block: Block) => {
+      if (block.type === "paragraph" && block.content) {
+        block.content.forEach((textBlock: TextBlock) => {
+          if (textBlock.type === "text" && textBlock.text) {
+            extractedText += textBlock.text + " ";
+          }
+        });
+      }
+    });
+    return extractedText.trim();
+  };
+
   if (!editor) {
     return null;
   }
@@ -99,12 +173,12 @@ export function PopupEditor() {
         tippyOptions={{ duration: 150 }}
         editor={editor}
         shouldShow={({ editor, view, state, oldState, from, to }) => {
-          // only show if range is selected.
           return from !== to;
         }}
       >
         <button
           className="menu-button"
+          type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
         >
@@ -112,6 +186,7 @@ export function PopupEditor() {
         </button>
         <button
           className="menu-button"
+          type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
         >
@@ -121,6 +196,7 @@ export function PopupEditor() {
           className={classNames("menu-button", {
             "is-active": editor.isActive("link"),
           })}
+          type="button"
           onClick={openModal}
         >
           <Icons.Link />
@@ -129,6 +205,7 @@ export function PopupEditor() {
           className={classNames("menu-button", {
             "is-active": editor.isActive("bold"),
           })}
+          type="button"
           onClick={toggleBold}
         >
           <Icons.Bold />
@@ -137,6 +214,7 @@ export function PopupEditor() {
           className={classNames("menu-button", {
             "is-active": editor.isActive("underline"),
           })}
+          type="button"
           onClick={toggleUnderline}
         >
           <Icons.Underline />
@@ -145,6 +223,7 @@ export function PopupEditor() {
           className={classNames("menu-button", {
             "is-active": editor.isActive("intalic"),
           })}
+          type="button"
           onClick={toggleItalic}
         >
           <Icons.Italic />
@@ -153,6 +232,7 @@ export function PopupEditor() {
           className={classNames("menu-button", {
             "is-active": editor.isActive("strike"),
           })}
+          type="button"
           onClick={toggleStrike}
         >
           <Icons.Strikethrough />
@@ -161,7 +241,17 @@ export function PopupEditor() {
           className={classNames("menu-button", {
             "is-active": editor.isActive("code"),
           })}
+          type="button"
           onClick={toggleCode}
+        >
+          <Icons.Code />
+        </button>
+        <button
+          className={classNames("menu-button", {
+            "is-active": editor.isActive("image"),
+          })}
+          type="button"
+          onClick={addImage}
         >
           <Icons.Code />
         </button>
@@ -177,10 +267,10 @@ export function PopupEditor() {
           return from === to && editor.isActive("link");
         }}
       >
-        <button className="button" onClick={openModal}>
+        <button className="button" type="button" onClick={openModal}>
           Edit
         </button>
-        <button className="button-remove" onClick={removeLink}>
+        <button className="button-remove" type="button" onClick={removeLink}>
           Remove
         </button>
       </BubbleMenu>
