@@ -1,35 +1,37 @@
 import { create } from "zustand";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { useEffect } from "react";
+import { User, UserState } from "@/model";
+import { initializeApp } from "firebase/app";
+import { User as FirebaseUser, onAuthStateChanged } from "firebase/auth";
 
-type UserState = {
-  user: User | null;
-  setUser: (user: User | null) => void;
-};
-
-type User = {
-  accessToken: string;
-  auth: object;
-  displayName: string;
-  email: string;
-  emailVerified: boolean;
-  isAnonymous: boolean;
-  metadata: {
-    createdAt: string;
-    lastLoginAt: string;
-    lastSignInTime: string;
-    creationTime: string;
-  };
-  phoneNumber: string | null;
-  photoURL: string;
-  providerId: string;
-  uid: string;
-  refreshToken: string;
-};
-
-// 사용자 상태를 저장하는 스토어 생성
 export const useUserStore = create<UserState>((set) => ({
-  user: null,
-  setUser: (user: User | null) => set({ user }),
+    user: null,
+    setUser: (user: User | null) => set({ user }),
+    initializeAuthListener: () => {
+        onAuthStateChanged(auth, (firebaseUser) => {
+            const user: User | null = transformFirebaseUserToUser(firebaseUser);
+            set({ user });
+        });
+    },
 }));
+
+function transformFirebaseUserToUser(firebaseUser: FirebaseUser | null): User | null {
+    if (!firebaseUser) return null;
+
+    return {
+        displayName: firebaseUser.displayName,
+        email: firebaseUser.email,
+        emailVerified: firebaseUser.emailVerified,
+        isAnonymous: firebaseUser.isAnonymous,
+        metadata: {
+            createdAt: firebaseUser.metadata.creationTime,
+            lastSignInTime: firebaseUser.metadata.lastSignInTime,
+        },
+        phoneNumber: firebaseUser.phoneNumber,
+        photoURL: firebaseUser.photoURL,
+        providerId: firebaseUser.providerId,
+        uid: firebaseUser.uid,
+        refreshToken: firebaseUser.refreshToken,
+    };
+}
