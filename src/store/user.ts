@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { auth } from "@/firebase";
-import { useEffect } from "react";
 import { User, UserState } from "@/model";
-import { initializeApp } from "firebase/app";
 import { User as FirebaseUser, onAuthStateChanged } from "firebase/auth";
 
 export const useUserStore = create<UserState>((set) => ({
