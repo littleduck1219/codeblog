@@ -9,7 +9,7 @@ import {
   onAuthStateChanged,
   signInWithRedirect,
   signOut,
-} from "firebase/auth";
+} from "@firebase/auth";
 import Link from "next/link";
 import { auth } from "@/firebase";
 import { useUserStore } from "@/store/user";
