@@ -1,18 +1,40 @@
-.post__mainImage-Wrapper {
-  width: 100dvw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  height: 350px;
-  overflow: hidden;
+.postDetail {
+  width: 100%;
 }
-.post__mainImage {
+.postDetail__banner {
+  position: relative;
+}
+.postDetail__banner__titleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  justify-content: center;
+  gap: 1rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.postDetail__banner__titleWrapper__title {
+  font-size: 4rem;
+  color: black;
+}
+.postDetail__banner__titleWrapper__createAt {
+  color: black;
+}
+.postDetail__banner__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  filter: blur(5px);
+}
+.postDetail__postbody {
+  min-height: 800px;
 }
 
 /*# sourceMappingURL=page.css.map */

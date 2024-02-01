@@ -1,63 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
-import { useEditor, EditorContent, Editor, BubbleMenu } from "@tiptap/react";
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
-import Link from "@tiptap/extension-link";
-import Bold from "@tiptap/extension-bold";
-import Underline from "@tiptap/extension-underline";
-import Italic from "@tiptap/extension-italic";
-import Strike from "@tiptap/extension-strike";
-import Code from "@tiptap/extension-code";
-import History from "@tiptap/extension-history";
-import Image from "@tiptap/extension-image";
-import Dropcursor from "@tiptap/extension-dropcursor";
+import { EditorContent, BubbleMenu } from "@tiptap/react";
+
 // Custom
 import * as Icons from "./Icons";
-import content from "./Content";
 import { LinkModal } from "./LinkModal";
 import "./editor.scss";
-
-type TextBlock = {
-  type: string;
-  text?: string;
-};
-
-type Block = {
-  type: string;
-  content?: TextBlock[];
-};
-
-type EditorJson = {
-  type: string;
-  content?: Block[];
-};
-
-type PopupEditorProps = {
-  onChangeContent: (newContent: string) => void;
-};
+import { Block, EditorJson, PopupEditorProps, TextBlock } from "@/model";
+import useCustomEditor from "@/app/newpost/__components/EditorConfig";
+import { useEditorState } from "@/app/newpost/__components/useEditorState";
 
 export function PopupEditor({ onChangeContent }: PopupEditorProps) {
-  const editor = useEditor({
-    extensions: [
-      Document,
-      History,
-      Paragraph,
-      Text,
-      Image,
-      Dropcursor,
-      Link.configure({
-        openOnClick: false,
-      }),
-      Bold,
-      Underline,
-      Italic,
-      Strike,
-      Code,
-    ],
-    content,
-  }) as Editor;
+  const editor = useCustomEditor();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [url, setUrl] = useState<string>("");
   const [isAddingImage, setIsAddingImage] = useState(false);

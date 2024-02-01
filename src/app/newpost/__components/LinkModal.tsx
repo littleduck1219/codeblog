@@ -2,6 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import * as Icons from "./Icons";
 import { Modal } from "./Modal";
+import "./editor.scss";
 
 interface IProps extends ReactModal.Props {
   url: string;

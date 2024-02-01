@@ -1,17 +1,19 @@
 .home {
   display: flex;
-  align-items: stretch;
+  box-sizing: border-box;
+  height: 100%;
 }
 .home__leftSectionWrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
   align-items: center;
-  background-color: red;
 }
 .home__leftSection {
-  width: 72px;
+  min-width: 200px;
   height: 100dvh;
+  padding-top: 5rem;
+  padding-left: 2rem;
 }
 .home__leftSectionFixed {
   position: fixed;
@@ -22,30 +24,42 @@
   flex-direction: column;
   align-items: center;
 }
+.home__categorySection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.home__categorySection p {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.home__categorySection .categoryWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.home__categorySection .categoryWrapper .category {
+  transition: font-size 0.3s, color 0.3s, border-left 0.3s, padding 0.3s;
+}
+.home__categorySection .categoryWrapper .category:hover {
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-left: 3px solid black;
+  padding-left: 0.4rem;
+}
 .home__rightSectionWrapper {
   display: flex;
-  align-items: flex-start;
-  height: 100dvh;
+  align-items: center;
   flex-direction: column;
   flex-grow: 3;
 }
-.home___rightSection {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.home__rightSection {
   width: 100%;
-  height: 100%;
-}
-.home__postButton {
-  background-color: #4287f5;
-  color: white;
-  border-radius: 2rem;
-  width: 12rem;
-  height: 3rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 5rem;
 }
 
 /*# sourceMappingURL=page.css.map */

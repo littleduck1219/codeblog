@@ -1,4 +1,5 @@
 import React from "react";
+import "./editor.scss";
 
 export const Bold = ({ size = 16, color = "currentColor" }) => (
   <svg

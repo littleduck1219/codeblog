@@ -10,17 +10,20 @@ import "./newPost.scss";
 import { auth, db, storage } from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/app/store/user";
+import { useUserStore } from "@/store/user";
 import { PopupEditor } from "@/app/newpost/__components/Editor";
 import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "@firebase/firestore";
 import { useFormState, useFormStatus } from "react-dom";
+import { useEditorState } from "@/app/newpost/__components/useEditorState";
+import useCustomEditor from "@/app/newpost/__components/EditorConfig";
 
 function Page() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
   const user = useUserStore((state) => state.user);
   const [title, setTitle] = useState("");
+  const editor = useCustomEditor();
   const [content, setContent] = useState("");
   const [category, setCategory] = useState<string>("");
   const [tags, setTags] = useState<string[]>([]);
@@ -66,6 +69,10 @@ function Page() {
     }
     if (shouldRedirect) router.replace("/");
   };
+
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

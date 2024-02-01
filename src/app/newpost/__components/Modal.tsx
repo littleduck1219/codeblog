@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ReactModal, { Props } from "react-modal";
+import "./editor.scss";
 
 // Modal setting.
 const modalStyles = {
