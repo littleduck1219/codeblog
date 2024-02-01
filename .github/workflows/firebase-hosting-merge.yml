@@ -11,11 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install
-      - run: npm run build
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./functions  # 의존성을 설치할 디렉토리 지정
+      - name: Build
+        run: npm run build
+        working-directory: ./functions  # 빌드 명령을 실행할 디렉토리 지정
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LITTLEDUCK_S_DEV_BLOG }}'
           channelId: live
           projectId: littleduck-s-dev-blog
+
