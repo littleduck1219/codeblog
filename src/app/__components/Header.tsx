@@ -2,11 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "./header.scss";
-import Image from "next/image";
 import { toast } from "react-toastify";
 import {
   GoogleAuthProvider,
-  onAuthStateChanged,
   signInWithRedirect,
   signOut,
 } from "@firebase/auth";
