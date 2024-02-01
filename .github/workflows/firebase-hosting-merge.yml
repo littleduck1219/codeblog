@@ -11,12 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
       - name: Install Dependencies
         run: npm install
-        working-directory: ./functions  # 의존성을 설치할 디렉토리 지정
+        working-directory: functions
       - name: Build
         run: npm run build
-        working-directory: ./functions  # 빌드 명령을 실행할 디렉토리 지정
+        working-directory: functions
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
